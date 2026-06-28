@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мій Музичний Простір</title>
+    <title>DemixSound</title>
     <style>
         :root {
-            --bg-color: #0b0b0d;
-            --card-color: #16161a;
-            --accent-color: #6c5ce7; /* Гарний фіолетовий */
+            --bg-color: #000000;
+            --card-color: #121212;
+            --accent-color: #1DB954; /* Зелений Spotify */
             --text-color: #ffffff;
-            --text-secondary: #a0a0a5;
+            --text-secondary: #b3b3b3;
+            --danger-color: #f15e6c;
         }
 
         body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -27,133 +28,247 @@
         }
 
         .player-card {
-            background: var(--card-color);
-            padding: 25px;
-            border-radius: 24px;
+            background: linear-gradient(180deg, #282828 0%, var(--card-color) 100%);
+            padding: 30px;
+            border-radius: 12px;
             width: 100%;
-            max-width: 340px;
+            max-width: 360px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
             box-sizing: border-box;
+            transition: background 0.3s ease;
         }
 
         .cover-art {
-            width: 240px;
-            height: 240px;
+            width: 280px;
+            height: 280px;
             background: #232329;
-            border-radius: 20px;
-            margin: 0 auto 20px;
+            border-radius: 8px;
+            margin: 0 auto 25px;
             background-size: cover;
             background-position: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
             transition: transform 0.3s ease;
         }
 
-        h2 { margin: 10px 0 5px; font-size: 1.3rem; font-weight: 600; }
-        p { color: var(--text-secondary); margin: 0 0 20px; font-size: 0.9rem; }
+        h2 { margin: 15px 0 8px; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.04em;}
+        p { color: var(--text-secondary); margin: 0 0 25px; font-size: 1rem; font-weight: 400;}
 
         .controls button {
             background: var(--accent-color);
             border: none;
-            color: white;
-            padding: 14px 28px;
+            color: black;
+            padding: 16px 32px;
             border-radius: 50px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.3);
+            box-shadow: 0 4px 12px rgba(29, 185, 84, 0.4);
         }
 
         .controls button:active { transform: scale(0.95); }
 
         .stats {
-            margin-top: 15px;
-            font-size: 0.8rem;
+            margin-top: 20px;
+            font-size: 0.9rem;
             color: var(--text-secondary);
         }
 
-        /* Форма додавання */
         .add-form {
             background: var(--card-color);
-            padding: 20px;
-            border-radius: 20px;
+            padding: 25px;
+            border-radius: 12px;
             width: 100%;
-            max-width: 340px;
-            margin-top: 20px;
+            max-width: 360px;
+            margin-top: 25px;
             box-sizing: border-box;
         }
 
-        .add-form h3 { margin-top: 0; font-size: 1.1rem; color: var(--text-color); }
+        .add-form h3 { margin-top: 0; font-size: 1.2rem; color: var(--text-color); font-weight: 700;}
 
-        input, select {
+        input {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            border: 1px solid #2d2d35;
-            background: #1f1f24;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #333;
+            background: #282828;
             color: white;
             box-sizing: border-box;
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
         .btn-submit {
-            background: #2d2d35;
-            color: white;
+            background: #fff;
+            color: #000;
             border: none;
-            padding: 10px;
+            padding: 12px;
             width: 100%;
-            border-radius: 8px;
+            border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.2s ease;
         }
-        .btn-submit:hover { background: var(--accent-color); }
+        .btn-submit:hover { background: var(--accent-color); color: black;}
 
-        /* Плейліст */
         .playlist {
             width: 100%;
-            max-width: 340px;
-            margin-top: 20px;
+            max-width: 360px;
+            margin-top: 25px;
         }
+
+        .playlist-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .playlist h3 { margin: 0; font-size: 1.2rem; font-weight: 700;}
+
         .playlist-item {
-            background: var(--card-color);
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 8px;
+            background: transparent;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 5px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             cursor: pointer;
             transition: background 0.2s;
         }
-        .playlist-item:hover { background: #1f1f24; }
+        .playlist-item:hover { background: #282828; }
+        
+        .track-click-area {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+        
         .playlist-item img {
-            width: 40px;
-            height: 40px;
-            border-radius: 6px;
-            margin-right: 12px;
+            width: 48px;
+            height: 48px;
+            border-radius: 4px;
+            margin-right: 15px;
             object-fit: cover;
         }
-        .playlist-info { flex-grow: 1; text-align: left; }
-        .playlist-info div { font-size: 0.9rem; font-weight: bold; }
-        .playlist-info span { font-size: 0.75rem; color: var(--text-secondary); }
+        .playlist-info { text-align: left; }
+        .playlist-info div { font-size: 1rem; font-weight: 500; color: white; }
+        .playlist-info span { font-size: 0.85rem; color: var(--text-secondary); }
+
+        .btn-delete {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            z-index: 10;
+            transition: color 0.2s ease;
+        }
+
+        .btn-delete:hover { color: var(--danger-color); }
+
+        /* Налаштування */
+        .settings-container {
+            width: 100%;
+            max-width: 360px;
+            margin-top: 25px;
+            background: var(--card-color);
+            padding: 25px;
+            border-radius: 12px;
+            box-sizing: border-box;
+            display: none; /* Приховано за замовчуванням */
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .settings-header h3 { margin: 0; font-size: 1.2rem; font-weight: 700;}
+
+        .btn-close-settings {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+
+        .settings-item label { font-size: 1rem; }
+
+        .btn-settings {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Перемикач (Switch) */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #535353;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px; width: 18px;
+            left: 4px; bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider { background-color: var(--accent-color); }
+        input:focus + .slider { box-shadow: 0 0 1px var(--accent-color); }
+        input:checked + .slider:before { transform: translateX(24px); }
     </style>
 </head>
 <body>
 
     <div class="player-card">
         <div class="cover-art" id="cover" style="background-image: url('https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=500')"></div>
-        <h2 id="title">Оберіть або додайте трек</h2>
-        <p id="artist">Плеєр порожній</p>
+        <h2 id="title">Ласкаво просимо</h2>
+        <p id="artist">Додайте музику</p>
 
         <audio id="audio-player"></audio>
+        <audio id="audio-player-next" style="display:none;"></audio>
 
         <div class="controls">
-            <button id="play-btn" onclick="togglePlay()">PLAY</button>
+            <button id="play-btn" onclick="togglePlay()">ГРАТИ</button>
         </div>
 
         <div class="stats">
-            Прослухано разів: <span id="listen-count">0</span>
+            Прослухано: <span id="listen-count">0</span> разів
         </div>
     </div>
 
@@ -162,24 +277,56 @@
         <input type="file" id="file-input" accept="audio/*">
         <input type="text" id="track-title" placeholder="Назва пісні">
         <input type="text" id="track-artist" placeholder="Виконавець">
-        <input type="text" id="track-cover" placeholder="URL обкладинки (або залиш порожнім)">
-        <button class="btn-submit" onclick="saveTrack()">Зберегти в плеєр</button>
+        <input type="text" id="track-cover" placeholder="URL обкладинки">
+        <button class="btn-submit" onclick="saveTrack()">Зберегти</button>
     </div>
 
     <div class="playlist">
-        <h3>Ваша медіатека</h3>
+        <div class="playlist-header">
+            <h3>Ваша медіатека</h3>
+            <button class="btn-settings" onclick="toggleSettings()">⚙️</button>
+        </div>
         <div id="playlist-container"></div>
+    </div>
+
+    <div class="settings-container" id="settings-container">
+        <div class="settings-header">
+            <h3>Налаштування</h3>
+            <button class="btn-close-settings" onclick="toggleSettings()">×</button>
+        </div>
+
+        <div class="settings-item">
+            <label for="crossfade-switch">Плавний перехід (Crossfade)</label>
+            <label class="switch">
+                <input type="checkbox" id="crossfade-switch" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="settings-item">
+            <label for="cover-zoom-switch">Анімація обкладинки</label>
+            <label class="switch">
+                <input type="checkbox" id="cover-zoom-switch" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
     </div>
 
     <script>
         let db;
         let playlist = [];
         let currentTrackIndex = -1;
+        let isCrossfading = false;
         
         const audio = document.getElementById('audio-player');
+        const audioNext = document.getElementById('audio-player-next');
         const playBtn = document.getElementById('play-btn');
+        const coverArt = document.getElementById('cover');
 
-        // 1. Ініціалізація Бази Даних IndexedDB у браузері
+        // Налаштування
+        const crossfadeSwitch = document.getElementById('crossfade-switch');
+        const coverZoomSwitch = document.getElementById('cover-zoom-switch');
+
         const request = indexedDB.open("MusicPlayerDB", 1);
         
         request.onupgradeneeded = function(e) {
@@ -189,10 +336,9 @@
 
         request.onsuccess = function(e) {
             db = e.target.result;
-            loadPlaylist(); // Завантажуємо треки при старті
+            loadPlaylist();
         };
 
-        // 2. Збереження треку в IndexedDB
         function saveTrack() {
             const fileInput = document.getElementById('file-input');
             const title = document.getElementById('track-title').value || "Без назви";
@@ -205,7 +351,6 @@
             }
 
             const file = fileInput.files[0];
-
             const transaction = db.transaction(["tracks"], "readwrite");
             const store = transaction.objectStore("tracks");
 
@@ -213,15 +358,13 @@
                 title: title,
                 artist: artist,
                 cover: cover,
-                file: file, // Зберігаємо сам файл як Blob!
+                file: file,
                 plays: 0
             };
 
             store.add(newTrack);
 
             transaction.oncomplete = function() {
-                alert("Пісню успішно додано!");
-                // Очищаємо поля форми
                 document.getElementById('track-title').value = '';
                 document.getElementById('track-artist').value = '';
                 document.getElementById('track-cover').value = '';
@@ -230,7 +373,6 @@
             };
         }
 
-        // 3. Відображення списку пісень
         function loadPlaylist() {
             const transaction = db.transaction(["tracks"], "readonly");
             const store = transaction.objectStore("tracks");
@@ -242,82 +384,154 @@
                 container.innerHTML = '';
 
                 if(playlist.length === 0) {
-                    container.innerHTML = '<p style="font-size:0.85rem; color:#666;">Тут поки порожньо...</p>';
+                    container.innerHTML = '<p style="font-size:0.9rem; color:#666;">Тут поки порожньо...</p>';
                     return;
                 }
 
                 playlist.forEach((track, index) => {
                     const item = document.createElement('div');
                     item.className = 'playlist-item';
-                    item.onclick = () => selectTrack(index);
+                    
                     item.innerHTML = `
-                        <img src="${track.cover}">
-                        <div class="playlist-info">
-                            <div>${track.title}</div>
-                            <span>${track.artist} · Слухано: ${track.plays}</span>
+                        <div class="track-click-area" onclick="selectTrack(${index})">
+                            <img src="${track.cover}">
+                            <div class="playlist-info">
+                                <div>${track.title}</div>
+                                <span>${track.artist} · Слухано: ${track.plays}</span>
+                            </div>
                         </div>
+                        <button class="btn-delete" onclick="deleteTrack(${track.id}, event)">×</button>
                     `;
                     container.appendChild(item);
                 });
             };
         }
 
-        // 4. Вибір пісні для відтворення
+        function deleteTrack(id, event) {
+            event.stopPropagation();
+            if(confirm("Видалити цю пісню?")) {
+                const transaction = db.transaction(["tracks"], "readwrite");
+                const store = transaction.objectStore("tracks");
+                store.delete(id);
+                transaction.oncomplete = function() {
+                    loadPlaylist();
+                };
+            }
+        }
+
         function selectTrack(index) {
             currentTrackIndex = index;
+            isCrossfading = false;
             const track = playlist[index];
 
             document.getElementById('title').innerText = track.title;
             document.getElementById('artist').innerText = track.artist;
-            document.getElementById('cover').style.backgroundImage = `url('${track.cover}')`;
+            coverArt.style.backgroundImage = `url('${track.cover}')`;
             document.getElementById('listen-count').innerText = track.plays;
 
-            // Створюємо тимчасове посилання на файл в пам'яті для тегу <audio>
-            if(audio.src) URL.revokeObjectURL(audio.src); // Очистка старої пам'яті
+            if(audio.src) URL.revokeObjectURL(audio.src);
             audio.src = URL.createObjectURL(track.file);
+            audio.volume = 1; 
             
-            togglePlay(true); // Запускаємо трек
+            togglePlay(true);
         }
 
-        // 5. Керування відтворенням
         function togglePlay(forcePlay = false) {
             if (audio.paused || forcePlay) {
-                audio.play().catch(e => console.log("Чекаємо взаємодії користувача"));
-                playBtn.innerText = "PAUSE";
-                playBtn.style.backgroundColor = "#e91e63";
+                audio.play().catch(e => console.log("Чекаємо тапу"));
+                playBtn.innerText = "ПАУЗА";
+                playBtn.style.backgroundColor = "#e91e63"; // Рожевий для паузи
+                if(coverZoomSwitch.checked) coverArt.style.transform = "scale(1.05)";
             } else {
                 audio.pause();
-                playBtn.innerText = "PLAY";
+                playBtn.innerText = "ГРАТИ";
                 playBtn.style.backgroundColor = "var(--accent-color)";
+                coverArt.style.transform = "scale(1)";
             }
         }
 
-        // 6. Лічильник прослуховувань + Автоперемикання (Плавний перехід)
-        audio.onended = function() {
-            if (currentTrackIndex !== -1) {
-                const track = playlist[currentTrackIndex];
-                track.plays += 1;
-
-                // Оновлюємо лічильник в базі даних
-                const transaction = db.transaction(["tracks"], "readwrite");
-                const store = transaction.objectStore("tracks");
-                store.put(track);
-
-                transaction.oncomplete = function() {
-                    loadPlaylist(); // Оновити список на екрані
-                    document.getElementById('listen-count').innerText = track.plays;
-                    
-                    // Перехід на наступний трек, якщо він є
-                    if (currentTrackIndex + 1 < playlist.length) {
-                        selectTrack(currentTrackIndex + 1);
-                    } else {
-                        // Якщо кінець плейліста
-                        playBtn.innerText = "PLAY";
-                        playBtn.style.backgroundColor = "var(--accent-color)";
-                    }
-                };
+        audio.ontimeupdate = function() {
+            // Перевіряємо налаштування плавного переходу
+            if (crossfadeSwitch.checked && audio.duration && (audio.duration - audio.currentTime <= 4) && !isCrossfading) {
+                if (currentTrackIndex + 1 < playlist.length) {
+                    isCrossfading = true;
+                    startCrossfade();
+                }
             }
         };
+
+        function startCrossfade() {
+            const nextIndex = currentTrackIndex + 1;
+            const nextTrack = playlist[nextIndex];
+            
+            if(audioNext.src) URL.revokeObjectURL(audioNext.src);
+            audioNext.src = URL.createObjectURL(nextTrack.file);
+            audioNext.volume = 0; 
+            audioNext.play().catch(e => console.log(e));
+
+            updatePlayCount(currentTrackIndex);
+
+            let fadeInterval = setInterval(() => {
+                if (audio.volume > 0.05) audio.volume -= 0.05;
+                else audio.volume = 0;
+
+                if (audioNext.volume < 0.95) audioNext.volume += 0.05;
+                else audioNext.volume = 1;
+
+                if (audio.volume === 0 && audioNext.volume === 1) {
+                    clearInterval(fadeInterval);
+                    
+                    audio.src = audioNext.src;
+                    audio.currentTime = audioNext.currentTime;
+                    audio.volume = 1;
+                    
+                    currentTrackIndex = nextIndex;
+                    
+                    document.getElementById('title').innerText = nextTrack.title;
+                    document.getElementById('artist').innerText = nextTrack.artist;
+                    coverArt.style.backgroundImage = `url('${nextTrack.cover}')`;
+                    document.getElementById('listen-count').innerText = nextTrack.plays;
+                    
+                    isCrossfading = false;
+                }
+            }, 200); 
+        }
+
+        function updatePlayCount(index) {
+            const track = playlist[index];
+            track.plays += 1;
+
+            const transaction = db.transaction(["tracks"], "readwrite");
+            const store = transaction.objectStore("tracks");
+            store.put(track);
+
+            transaction.oncomplete = function() {
+                loadPlaylist();
+            };
+        }
+
+        audio.onended = function() {
+            if (!isCrossfading) {
+                updatePlayCount(currentTrackIndex);
+                // Перевіряємо, чи є наступний трек, щоб продовжити грати
+                if (currentTrackIndex + 1 < playlist.length) {
+                    selectTrack(currentTrackIndex + 1);
+                } else {
+                    playBtn.innerText = "ГРАТИ";
+                    playBtn.style.backgroundColor = "var(--accent-color)";
+                    coverArt.style.transform = "scale(1)";
+                }
+            }
+        };
+
+        function toggleSettings() {
+            const container = document.getElementById('settings-container');
+            if (container.style.display === 'none' || container.style.display === '') {
+                container.style.display = 'block';
+            } else {
+                container.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
